@@ -34,7 +34,7 @@ function History() {
                         <th>Nume curier</th>
                     </tr>
                 </thead>
-                <tbody class="table__body">
+                <tbody className="table__body">
                         {record.map((recorder) => {
                             return (
                                 <tr>
