@@ -11,12 +11,12 @@ function random_rgba() {
 
 function assign_values(names, values, rgbaCols, quantity, id){
     
-    if(names.indexOf(id) == -1){
+    if(names.indexOf("Spitalul cu id-ul: " + id) == -1){
     names.push("Spitalul cu id-ul: " + id);
     values.push(quantity);
     rgbaCols.push(random_rgba());
     } else {
-        values[names.indexOf(id)] = values[names.indexOf(id)] + quantity;
+        values[names.indexOf("Spitalul cu id-ul: " + id)] = values[names.indexOf("Spitalul cu id-ul: " + id)] + quantity;
     }
 
     return true;
@@ -24,13 +24,13 @@ function assign_values(names, values, rgbaCols, quantity, id){
 
 function increase_chauffeur(chauffeur, requestedChauffeur, rgbaColsChauffeur ,id){
 
-    if(chauffeur.indexOf(id) == -1){
+    if(chauffeur.indexOf("Soferul cu id-ul: " + id) == -1){
         chauffeur.push("Soferul cu id-ul: " + id);
         requestedChauffeur.push(1);
         rgbaColsChauffeur.push(random_rgba());
     }
     else{
-        requestedChauffeur[chauffeur.indexOf(id)] = requestedChauffeur[chauffeur.indexOf(id)] + 1;
+        requestedChauffeur[chauffeur.indexOf("Soferul cu id-ul: " + id)] = requestedChauffeur[chauffeur.indexOf("Soferul cu id-ul: " + id)] + 1;
     }
 
     return true;
