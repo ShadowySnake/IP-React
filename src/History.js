@@ -21,7 +21,7 @@ function History() {
     return (
         <div className="history">
             <table className="table">
-                <thead class="table__header">
+                <thead className="table__header">
                     <tr>
                         <th>Id</th>
                         <th>Expeditor</th>
