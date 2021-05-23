@@ -31,7 +31,7 @@ class Chart extends Component{
 
 
     componentDidMount(){
-        axios.get("http://ip-lab.herokuapp.com/istoric/?format=json").then(response => {
+        axios.get("https://ip-lab.herokuapp.com/istoric/?format=json").then(response => {
           console.log('This is the data', response.data)
         });
     }  
