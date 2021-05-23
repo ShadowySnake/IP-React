@@ -41,12 +41,12 @@ function Chart(){
     const [isLoading, setLoading] = useState(true);
     const [record, setRecord] = useState();
 
-    const names = [];
-    const values = [];
-    const rgbaCols = [];
-    const chauffeur = [];
-    const requestedChauffeur = [];
-    const rgbaColsChauffeur = [];
+    var names = [];
+    var values = [];
+    var rgbaCols = [];
+    var chauffeur = [];
+    var requestedChauffeur = [];
+    var rgbaColsChauffeur = [];
 
     useEffect(() => {
         console.debug("After mount! Let's load data from API...");
