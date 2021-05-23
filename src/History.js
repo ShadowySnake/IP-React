@@ -15,7 +15,7 @@ function History() {
       }, []);
 
       if (isLoading) {
-        return <div className="history">Loading...</div>;
+        return <div className="history">Table is Loading...</div>;
       }
 
     return (

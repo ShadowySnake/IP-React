@@ -1,57 +1,124 @@
 import "../index.css";
 import axios from 'axios';
-import React, {Component} from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import React, { useState, useEffect } from 'react';
+import {Bar} from 'react-chartjs-2';
 
-class Chart extends Component{
 
-    constructor(props){
-        super(props);
-        this.state = {
+function random_rgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(8) + ')';
+}
+
+function assign_values(names, values, rgbaCols, quantity, id){
+    
+    if(names.indexOf(id) == -1){
+    names.push("Spitalul cu id-ul: " + id);
+    values.push(quantity);
+    rgbaCols.push(random_rgba());
+    } else {
+        values[names.indexOf(id)] = values[names.indexOf(id)] + quantity;
+    }
+
+    return true;
+}
+
+function increase_chauffeur(chauffeur, requestedChauffeur, rgbaColsChauffeur ,id){
+
+    if(chauffeur.indexOf(id) == -1){
+        chauffeur.push("Soferul cu id-ul: " + id);
+        requestedChauffeur.push(1);
+        rgbaColsChauffeur.push(random_rgba());
+    }
+    else{
+        requestedChauffeur[chauffeur.indexOf(id)] = requestedChauffeur[chauffeur.indexOf(id)] + 1;
+    }
+
+    return true;
+}
+
+
+function Chart(){
+    const [isLoading, setLoading] = useState(true);
+    const [record, setRecord] = useState();
+
+    const names = [];
+    const values = [];
+    const rgbaCols = [];
+    const chauffeur = [];
+    const requestedChauffeur = [];
+    const rgbaColsChauffeur = [];
+
+    useEffect(() => {
+        console.debug("After mount! Let's load data from API...");
+        axios.get("https://ip-lab.herokuapp.com/istoric/").then(response => {
+          setRecord(response.data);
+          setLoading(false);
+        });
+      }, []);
+
+      if (isLoading) {
+        return <div className="chart">Chart is Loading...</div>;
+      }
+
+      record.map((recorder) => {
+            assign_values(names,values,rgbaCols,recorder.cantitate,recorder.institutie_primitoare)
+            increase_chauffeur(chauffeur,requestedChauffeur,rgbaColsChauffeur,recorder.sofer)
+        })
+
+        const state1 = {
             chartData:{
-                labels: ['X', 'Y', 'Z'],
+                labels: names,
                 datasets:[
                   {
                     label:'Quantities requested',
-                    data:[
-                      1,
-                      2,
-                      3
-                    ],
-                    backgroundColor:[
-                      'rgba(255, 99, 132, 0.6)',
-                      'rgba(54, 162, 235, 0.6)',
-                      'rgba(255, 206, 86, 0.6)'
-                    ]
+                    data:values,
+                    backgroundColor:rgbaCols
                   }
                 ]
               }
         }
-      }
 
+        const state2 = {
+            chartData:{
+                labels: chauffeur,
+                datasets:[
+                  {
+                    label:'Requested number of times',
+                    data:requestedChauffeur,
+                    backgroundColor:rgbaColsChauffeur
+                  }
+                ]
+              }
+        }
 
-    componentDidMount(){
-        axios.get("https://ip-lab.herokuapp.com/istoric/?format=json").then(response => {
-          console.log('This is the data', response.data)
-        });
-    }  
-
-    render(){
         return(
-            <div className="chart">
-                <Doughnut
-                    data={this.state.chartData}
-                    options={{ maintainAspectRatio: false,
-                        title:{
-                            display: true,
-                            text: 'Requested quantities',
-                            fontsize: 35
-                        }
-                    }}
-                />
+            <div className="bothCharts" >
+                <div className="chart">
+                    <Bar
+                        data={state1.chartData}
+                        options={{ maintainAspectRatio: false,
+                            title:{
+                                display: true,
+                                text: 'Requested quantities',
+                             fontsize: 35
+                         }
+                     }}
+                 />
+                </div>
+                <div className="chart">
+                <Bar
+                        data={state2.chartData}
+                        options={{ maintainAspectRatio: false,
+                            title:{
+                                display: true,
+                                text: 'Chauffeur',
+                             fontsize: 35
+                         }
+                     }}
+                 />
+                </div>
             </div>
         )
-    }
 }
 
 export default Chart;
