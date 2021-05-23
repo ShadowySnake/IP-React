@@ -8,7 +8,7 @@ function History() {
 
     useEffect(() => {
         console.debug("After mount! Let's load data from API...");
-        axios.get("http://ip-lab.herokuapp.com/istoric/?format=json").then(response => {
+        axios.get("http://ip-lab.herokuapp.com/istoric/").then(response => {
           setRecord(response.data);
           setLoading(false);
         });
