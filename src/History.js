@@ -41,9 +41,9 @@ function History() {
                                 <td>{recorder.id}</td>
                                 <td>{recorder.institutie_donatoare}</td>
                                 <td>{recorder.institutie_primitoare}</td>
-                                <td>{recorder.data_cerere}</td>
-                                <td>{recorder.data_plecare_sofer}</td>
-                                <td>{recorder.data_livrare}</td>
+                                <td>{new Date(recorder.data_cerere).toString()}</td>
+                                <td>{new Date(recorder.data_plecare_sofer).toString()}</td>
+                                <td>{new Date(recorder.data_livrare).toString()}</td>
                                 <td>{recorder.tip_material}</td>
                                 <td>{recorder.cantitate}</td>
                                 <td>{recorder.sofer}</td>
